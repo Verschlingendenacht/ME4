@@ -25,3 +25,6 @@ class Objeto:
 
     def usar(self):
         print(f"Usando el objeto: {self.nombre}")
+
+    def __str__(self):
+        return f"Hechizo: {self.nombre} | Efecto: {self.efecto} | Duración: {self.duracion} | Peso: {self.peso} | Usos: {self.usos}"

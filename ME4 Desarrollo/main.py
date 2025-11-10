@@ -16,3 +16,7 @@
 # -----------------------------------------------------------
 
 from double_list import double_list
+from controlador import Controlador
+
+controlador = Controlador()
+controlador.cargar_desde_archivo(r"C:\Users\nilzo\Documents\programacion\proyectos\ME4\ME4 Desarrollo\recursos\iniciales.csv")

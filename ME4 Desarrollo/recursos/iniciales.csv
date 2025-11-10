@@ -1,0 +1,51 @@
+tipo_objeto,nombre_objeto,efecto,duración_efecto,peso,usos
+Poción,Elixir de Resistencia,Restaura mana,10 min,4.3,1
+Hechizo,Control Mental,Crea escudo mágico,30 seg,3.2,5
+Poción,Poción de Velocidad,Aumenta velocidad,Instantáneo,4.1,2
+Poción,Poción de Velocidad,Recupera salud,5 min,5.1,8
+Objeto,Espada de Fuego,Canaliza energía mágica,30 seg,2.2,5
+Objeto,Daga de Sombras,Incrementa defensa,15 min,0.4,1
+Hechizo,Curación Mayor,Lanza energía mágica,5 min,4.5,4
+Objeto,Arco Élfico,Permite doble salto,30 seg,4.7,9
+Hechizo,Maldición Oscura,Crea escudo mágico,30 seg,0.6,1
+Poción,Elixir de Mana,Restaura mana,1 min,3.6,2
+Objeto,Espada de Fuego,Permite doble salto,15 min,5.0,6
+Hechizo,Teletransportación,Crea escudo mágico,30 seg,4.5,1
+Poción,Poción de Invisibilidad,Cura veneno,1 min,3.0,6
+Objeto,Espada de Fuego,Incrementa defensa,Instantáneo,4.5,5
+Poción,Elixir de Fuego,Recupera salud,30 seg,4.7,3
+Hechizo,Curación Mayor,Causa daño elemental,1 min,3.3,10
+Poción,Poción de Invisibilidad,Aumenta velocidad,1 min,3.5,3
+Poción,Poción de Fuerza,Incrementa fuerza temporalmente,15 min,5.4,7
+Objeto,Martillo de Trueno,Aumenta daño,10 min,2.3,10
+Hechizo,Bola de Fuego,Controla mente,Instantáneo,1.9,7
+Poción,Elixir de Fuego,Recupera salud,Instantáneo,0.3,7
+Hechizo,Invocación de Golem,Invoca criatura aliada,10 min,4.4,3
+Objeto,Amuleto de Protección,Permite doble salto,Instantáneo,5.1,10
+Objeto,Anillo de Poder,Aumenta daño,Permanente,3.7,5
+Objeto,Anillo de Poder,Permite doble salto,Instantáneo,0.1,6
+Poción,Elixir de Mana,Incrementa fuerza temporalmente,2 min,1.8,4
+Poción,Poción de Invisibilidad,Cura veneno,15 min,3.9,3
+Poción,Elixir de Mana,Aumenta velocidad,2 min,4.2,9
+Poción,Poción de Invisibilidad,Aumenta velocidad,5 min,2.6,5
+Objeto,Escudo de Hierro,Incrementa defensa,Permanente,1.7,1
+Poción,Elixir de Resistencia,Restaura mana,Permanente,6.4,2
+Hechizo,Escudo Mágico,Controla mente,15 min,2.5,2
+Objeto,Anillo de Poder,Canaliza energía mágica,2 min,3.6,8
+Poción,Poción de Fuerza,Restaura mana,30 seg,6.5,7
+Hechizo,Invocación de Golem,Controla mente,2 min,2.6,7
+Hechizo,Curación Mayor,Causa daño elemental,15 min,0.4,4
+Objeto,Daga de Sombras,Reduce daño físico,Permanente,3.3,6
+Poción,Poción de Velocidad,Recupera salud,15 min,4.8,9
+Hechizo,Invisibilidad,Invoca criatura aliada,10 min,3.6,6
+Poción,Elixir de Resistencia,Incrementa fuerza temporalmente,10 min,1.3,4
+Hechizo,Tormenta de Hielo,Crea escudo mágico,15 min,6.0,5
+Hechizo,Invisibilidad,Causa daño elemental,15 min,4.1,6
+Objeto,Escudo de Hierro,Incrementa defensa,15 min,0.6,1
+Poción,Poción de Fuerza,Recupera salud,2 min,2.5,10
+Hechizo,Curación Mayor,Controla mente,Permanente,6.2,6
+Objeto,Espada de Fuego,Reduce daño físico,15 min,2.7,7
+Hechizo,Invisibilidad,Crea escudo mágico,15 min,0.8,3
+Objeto,Daga de Sombras,Aumenta daño,30 seg,3.1,9
+Objeto,Amuleto de Protección,Incrementa defensa,Instantáneo,2.1,8
+Poción,Elixir de Resistencia,Cura veneno,2 min,0.8,5

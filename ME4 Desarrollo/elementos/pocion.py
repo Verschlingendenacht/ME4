@@ -25,3 +25,6 @@ class Pocion:
 
     def beber(self):
         print(f"Bebiendo la poción: {self.nombre} que tiene el efecto: {self.efecto} por {self.duracion} minutos.")
+
+    def __str__(self):
+        return f"Hechizo: {self.nombre} | Efecto: {self.efecto} | Duración: {self.duracion} | Peso: {self.peso} | Usos: {self.usos}"

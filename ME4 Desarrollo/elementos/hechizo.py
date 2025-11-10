@@ -25,3 +25,6 @@ class Hechizo:
 
     def lanzar(self, objetivo):
         print(f"Lanzando {self.nombre} sobre {objetivo} con poder {self.efecto} y costo de mana {self.peso}.")
+    
+    def __str__(self):
+        return f"Hechizo: {self.nombre} | Efecto: {self.efecto} | Duración: {self.duracion} | Peso: {self.peso} | Usos: {self.usos}"

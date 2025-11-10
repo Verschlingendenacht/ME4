@@ -45,13 +45,35 @@ class Controlador:
     # ---------------------------------------------
     # Operaciones principales del sistema
     # ---------------------------------------------
-    def cargar_desde_archivo(self, ruta, tipo):
+    def cargar_desde_archivo(self, ruta, tipo = None): #q es tipo?
         """
         Lee los datos iniciales desde un archivo de texto.
         Cada línea debe contener:
         tipo, nombre, efecto, duracion, peso, usos
         """
-        pass
+        try:
+            with open(ruta, "r", encoding="utf-8") as archivo:
+                contenido = archivo.readlines()
+                for linea in contenido:
+                    # Process each line and add to appropriate list
+                    datos = linea.strip().split(',')
+                    if len(datos) >= 6:
+                        tipo_elemento = datos[0].lower()
+                        if tipo_elemento == "hechizo":
+                            hechizo = Hechizo(datos[0], datos[1], datos[2], datos[3], datos[4])
+                            print(hechizo)
+                        elif tipo_elemento == "pocion":
+                            pocion = Pocion(datos[0], datos[1], datos[2], datos[3], datos[4])
+                            print(pocion)
+                        else:
+                            objeto = Objeto(datos[0], datos[1], datos[2], datos[3], datos[4])
+                            print(objeto)
+
+        except FileNotFoundError:
+            print(f"Error: No se encontró el archivo {ruta}")
+        except Exception as e:
+            print(f"Error al cargar el archivo: {str(e)}")
+
 
     def agregar_elemento(self, tipo, elemento):
         """
