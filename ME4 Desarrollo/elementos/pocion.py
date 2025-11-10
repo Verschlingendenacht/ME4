@@ -15,16 +15,11 @@
 # aplicando los principios de POO y siguiendo las directrices del curso.
 # -----------------------------------------------------------
 
-class Pocion:
+from elementos.objeto import Objeto
+
+class Pocion(Objeto):
     def __init__(self, nombre, efecto, duracion, peso, usos):
-        self.nombre = nombre
-        self.efecto = efecto
-        self.duracion = duracion
-        self.peso = peso
-        self.usos = usos
+        super().__init__(nombre, efecto, duracion, peso, usos)
 
     def beber(self):
         print(f"Bebiendo la poción: {self.nombre} que tiene el efecto: {self.efecto} por {self.duracion} minutos.")
-
-    def __str__(self):
-        return f"Hechizo: {self.nombre} | Efecto: {self.efecto} | Duración: {self.duracion} | Peso: {self.peso} | Usos: {self.usos}"

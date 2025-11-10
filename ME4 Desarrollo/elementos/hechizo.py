@@ -15,16 +15,11 @@
 # aplicando los principios de POO y siguiendo las directrices del curso.
 # -----------------------------------------------------------
 
-class Hechizo:
+from elementos.objeto import Objeto
+
+class Hechizo(Objeto):
     def __init__(self, nombre, efecto, duracion, peso, usos):
-        self.nombre = nombre
-        self.efecto = efecto
-        self.duracion = duracion
-        self.peso = peso
-        self.usos = usos
+        super().__init__(nombre, efecto, duracion, peso, usos)
 
     def lanzar(self, objetivo):
         print(f"Lanzando {self.nombre} sobre {objetivo} con poder {self.efecto} y costo de mana {self.peso}.")
-    
-    def __str__(self):
-        return f"Hechizo: {self.nombre} | Efecto: {self.efecto} | Duración: {self.duracion} | Peso: {self.peso} | Usos: {self.usos}"

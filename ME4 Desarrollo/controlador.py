@@ -53,21 +53,26 @@ class Controlador:
         """
         try:
             with open(ruta, "r", encoding="utf-8") as archivo:
-                contenido = archivo.readlines()
-                for linea in contenido:
+
+                next(archivo) #saltarnos las cabeceras
+
+                for linea in archivo:
                     # Process each line and add to appropriate list
                     datos = linea.strip().split(',')
                     if len(datos) >= 6:
                         tipo_elemento = datos[0].lower()
                         if tipo_elemento == "hechizo":
-                            hechizo = Hechizo(datos[0], datos[1], datos[2], datos[3], datos[4])
-                            print(hechizo)
-                        elif tipo_elemento == "pocion":
-                            pocion = Pocion(datos[0], datos[1], datos[2], datos[3], datos[4])
-                            print(pocion)
+                            hechizo = Hechizo(datos[1], datos[2], datos[3], datos[4], datos[5])
+                            self.agregar_elemento(Hechizo, hechizo)
+
+                        elif tipo_elemento == "poción":
+                            pocion = Pocion(datos[1], datos[2], datos[3], datos[4], datos[5])
+                            self.agregar_elemento(Pocion, pocion)
+
                         else:
-                            objeto = Objeto(datos[0], datos[1], datos[2], datos[3], datos[4])
-                            print(objeto)
+                            objeto = Objeto(datos[1], datos[2], datos[3], datos[4], datos[5])
+                            self.agregar_elemento(Objeto, objeto)
+
 
         except FileNotFoundError:
             print(f"Error: No se encontró el archivo {ruta}")
@@ -79,7 +84,41 @@ class Controlador:
         """
         Inserta un nuevo elemento a la lista indicada.
         """
-        pass
+        if tipo == Hechizo:
+            self.lista_hechizos.addFirst(elemento)
+        elif tipo == Pocion:
+            self.lista_pociones.addFirst(elemento)
+        elif tipo == Objeto: #agregar de forma ordenada (requisito del profe)
+            lista = self.lista_objetos
+            #intentar convertir peso a float
+            try:
+                nuevo_peso = float(elemento.peso)
+            except Exception:
+                nuevo_peso = 0.0
+
+            if lista.isEmpty():
+                lista.addFirst(elemento)
+                return
+            
+            current = lista.first
+            while current:
+                try:
+                    peso_actual = float(current.data.peso)
+                except Exception:
+                    peso_actual = 0.0
+                #insertar antes del prier nodo con peso menor que el nuevo
+                if peso_actual < nuevo_peso:
+                    lista.addBefore(current, elemento)
+                    return
+                current = current.next
+
+            #si no se inserto (nuevo_peso <= todos), agregar al final
+            lista.addLast(elemento)
+            return 
+        
+        else:
+            raise TypeError("Tipo de elemento no soportado al agregar (clase)")
+            
 
     def buscar_por_nombre(self, tipo, nombre):
         """
@@ -94,16 +133,65 @@ class Controlador:
         """
         pass
 
-    def listar_por_peso(self, tipo, descendente=True):
+    def listar_por_peso(self, tipo, descendente=True): #descendente= mayor a menor, ascendente=menor a mayor
         """
-        Ordena la lista seleccionada según el peso del elemento.
+        Retorna una nueva double_list con los elementos de la lista seleccionada
+        ordenados por peso.
         """
-        pass
+                
+        lista_origen = self.__seleccionar_lista(tipo)
+        if lista_origen is None:
+            raise ValueError(f"Tipo desconocido: {tipo}")
+        
+        resultado = double_list() #aqui va todo
+        nodo = lista_origen.first #empezamos por organizar desde la cabeza
 
-    def generar_archivo_usos_bajos(self, ruta_salida="usos_bajos.txt"):
+        #para cada nodo en la lista original
+        while nodo:
+            elemento = nodo.data
+
+            try:
+                peso_nuevo = float(elemento.peso)
+            except Exception:
+                peso_nuevo = 0.0
+
+            if resultado.isEmpty():
+                resultado.addFirst(elemento)
+            else:
+                current = resultado.first
+                inserted = False
+                while current:
+                    try:
+                        peso_actual = float(current.data.peso)
+                    except Exception:
+                        peso_actual = 0.0
+
+                    if descendente: #osea mayor a menor
+                        #Insertar antes del primer elemento menor
+                        if peso_actual < peso_nuevo:
+                            resultado.addBefore(current, elemento)
+                            inserted = True
+                            break
+                    else: #osea menor a mayor
+                        #ascendente: insertar antse del primer elemento mayor
+                        if peso_actual > peso_nuevo:
+                            resultado.addBefore(current, elemento)
+                            inserted = True
+                            break
+                    current = current.next
+
+                #Si no se inserto va al final
+                if not inserted:
+                    resultado.addLast(elemento)
+
+            nodo = nodo.next
+
+        return resultado
+
+    def generar_archivo_sin_usos(self, ruta_salida="sin_usos.txt"):
         """
         Genera un archivo con todos los elementos de las tres listas
-        que tengan 3 usos o menos.
+        que tengan 0 usos.
         """
         pass
 
@@ -111,4 +199,17 @@ class Controlador:
     # Método interno para seleccionar lista
     # ---------------------------------------------
     def __seleccionar_lista(self, tipo):
-        pass
+        """
+        Retorna la lista doble correspondiente según tipo.
+        """
+
+        if isinstance(tipo, str):
+            key = tipo.lower()
+            if key in ("hechizo", "hechizos"):
+                return self.lista_hechizos
+            if key in ("pocion", "pociones"):
+                return self.lista_pociones
+            if key in ("objeto", "objetos"):
+                return self.lista_objetos
+            return None
+
