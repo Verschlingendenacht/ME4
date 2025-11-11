@@ -245,7 +245,7 @@ class Controlador:
 
         return resultado
 
-    def generar_archivo_sin_usos(self, elemento, tipo, ruta="recursos/sin_usos.csv"):
+    def generar_archivo_sin_usos(self, elemento, tipo, ruta="ME4 Desarrollo/recursos/sin_usos.csv"):
         """
         Escribe o genera un archivo con todos los elementos de las tres listas
         que tengan 0 usos (basicamente eliminados del inventarioo).

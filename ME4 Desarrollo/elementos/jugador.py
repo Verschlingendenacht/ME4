@@ -56,7 +56,7 @@ class Jugador:
         Usa los metodos del controlador para buscar/eliminar.
         La logica específica de uso se define en cada clase (Hechizo, Pocion, etc.)
         """
-        elemento = self.controlador.buscar_por_nombre(tipo, nombre)
+        elemento = self.__controlador.buscar_por_nombre(tipo, nombre)
 
         if not elemento:
             print(f"❌No se encontro el {tipo} '{nombre}'.")
@@ -81,7 +81,7 @@ class Jugador:
             eliminar = True
 
         if eliminar:
-            self.controlador.eliminar_por_nombre(tipo, nombre)
+            self.__controlador.eliminar_por_nombre(tipo, nombre)
 
     def calcular_peso_total(self):
         """

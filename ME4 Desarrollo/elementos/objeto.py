@@ -21,8 +21,8 @@ class Objeto:
         self.__nombre = nombre
         self.__efecto = efecto
         self.__duracion = duracion
-        self.__peso = peso
-        self.__usos = usos
+        self.__peso = float(peso)
+        self.__usos = int(usos)
 
     def usar(self):
         print(f"Usando el objeto: {self.nombre}")
