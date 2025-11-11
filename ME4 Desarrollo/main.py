@@ -58,3 +58,5 @@ jugador.mostrar_inventario()
 #jugador.mostrar_inventario()
 
 #------------------
+
+#print(controlador.buscar_por_nombre("Objeto", "Espada de Fuego"))

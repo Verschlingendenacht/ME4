@@ -50,6 +50,39 @@ class Jugador:
         else:
             self.__mana = valor
 
+    def usar(self, tipo, nombre, objetivo=None):
+        """
+        Usa un objeto, hechizo opocion por su nombre.
+        Usa los metodos del controlador para buscar/eliminar.
+        La logica específica de uso se define en cada clase (Hechizo, Pocion, etc.)
+        """
+        elemento = self.controlador.buscar_por_nombre(tipo, nombre)
+
+        if not elemento:
+            print(f"❌No se encontro el {tipo} '{nombre}'.")
+            return
+
+        #--- Llamar la logica propia del objeto ---
+        if tipo.lower() == "hechizo":
+            elemento.usar(self, objetivo)  #pasa al jugador para afectar su mana
+        elif tipo.lower() == "pocion":
+            elemento.usar()
+        elif tipo.lower() == "objeto":
+            elemento.usar()
+        else:
+            print(f"⚠️ Tipo '{tipo}' no reconocido.")
+            return
+
+        # -- Comprobar si debe eliminarse de la lista ---
+        eliminar = False
+        if hasattr(elemento, "usos") and elemento.usos <= 0:
+            eliminar = True
+        if hasattr(elemento, "peso") and elemento.peso <= 0:
+            eliminar = True
+
+        if eliminar:
+            self.controlador.eliminar_por_nombre(tipo, nombre)
+
     def calcular_peso_total(self):
         """
         Calcula el peso total del inventario desde los datos del controlador.

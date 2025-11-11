@@ -19,6 +19,7 @@ from double_list import double_list
 from elementos.objeto import Objeto
 from elementos.hechizo import Hechizo
 from elementos.pocion import Pocion
+import os
 
 #pensemos en esto como el inventario general
 class Controlador:
@@ -57,7 +58,7 @@ class Controlador:
     # ---------------------------------------------
     def cargar_desde_archivo(self, ruta, tipo = None): #q es tipo?
         """
-        Lee los datos iniciales desde un archivo de texto.
+        Lee los datos iniciales desde un archivo de texto (o csv?).
         Cada línea debe contener:
         tipo, nombre, efecto, duracion, peso, usos
         """
@@ -73,15 +74,15 @@ class Controlador:
                         tipo_elemento = datos[0].lower()
                         if tipo_elemento == "hechizo":
                             hechizo = Hechizo(datos[1], datos[2], datos[3], datos[4], datos[5])
-                            self.agregar_elemento(Hechizo, hechizo)
+                            self.agregar_elemento("hechizo", hechizo)
 
                         elif tipo_elemento == "poción":
                             pocion = Pocion(datos[1], datos[2], datos[3], datos[4], datos[5])
-                            self.agregar_elemento(Pocion, pocion)
+                            self.agregar_elemento("pocion", pocion)
 
                         else:
                             objeto = Objeto(datos[1], datos[2], datos[3], datos[4], datos[5])
-                            self.agregar_elemento(Objeto, objeto)
+                            self.agregar_elemento("objeto", objeto)
 
 
         except FileNotFoundError:
@@ -90,7 +91,7 @@ class Controlador:
             print(f"Error al cargar el archivo: {str(e)}")
 
 
-    def agregar_elemento(self, tipo, elemento):
+    def agregar_elemento(self, tipo : str, elemento):
         """
         Inserta un nuevo elemento a la lista indicada.
         """
@@ -99,11 +100,11 @@ class Controlador:
             print(f"No se puede agregar '{getattr(elemento, 'nombre', str(elemento))}': excede límite de peso del jugador.")
             return False
         
-        if tipo == Hechizo:
+        if tipo.lower() in ("hechizo", "hechizos"):
             self.lista_hechizos.addFirst(elemento)
-        elif tipo == Pocion:
+        elif tipo.lower() in ("pocion", "pociones"):
             self.lista_pociones.addFirst(elemento)
-        elif tipo == Objeto: #agregar de forma ordenada (requisito del profe)
+        elif tipo.lower() in ("objeto", "objetos"): #agregar de forma ordenada (requisito del profe)
             lista = self.lista_objetos
             #intentar convertir peso a float
             try:
@@ -140,13 +141,54 @@ class Controlador:
         Busca un elemento en la lista según su nombre.
         Retorna el objeto si lo encuentra, None si no.
         """
-        pass
+        listaABuscar = self.__seleccionar_lista(tipo)
+        if listaABuscar is None or listaABuscar.first is None:
+            return None
 
+        nodo = listaABuscar.first
+        nombreABuscar = nombre.lower()
+
+        while nodo is not None:
+            elemento = nodo.data
+            if elemento.nombre.lower() == nombreABuscar:
+                return elemento
+            nodo = nodo.next
+
+        return None
+    
     def eliminar_por_nombre(self, tipo, nombre):
         """
         Elimina un elemento por su nombre.
+        Retorna True si fue exitoso, False si no.
         """
-        pass
+        listaABuscar = self.__seleccionar_lista(tipo)
+        if listaABuscar is None or listaABuscar.first is None:
+            print("Lista no valida o está vacia.")
+            return False
+
+        nodo = listaABuscar.first
+        nombre_buscado = nombre.lower()
+
+        #Buscar el nodo
+        while nodo is not None:
+            elemento = nodo.data
+            if elemento.nombre.lower() == nombre_buscado:
+
+                #Registrar el elemento eliminado
+                self.generar_archivo_sin_usos(elemento, tipo)
+
+                #Eliminarlo de la lista
+                listaABuscar.remove(nodo)
+
+                print(f"Elemento '{nombre}' eliminado correctamente de la lista '{tipo}'.")
+                return True
+            
+            nodo = nodo.next
+
+        #Si no se encontr
+        print(f"El elemento '{nombre}' no fue encontrado en la lista de tipo '{tipo}'.")
+        return False
+
 
     def listar_por_peso(self, tipo, descendente=True): #descendente= mayor a menor, ascendente=menor a mayor
         """
@@ -203,12 +245,20 @@ class Controlador:
 
         return resultado
 
-    def generar_archivo_sin_usos(self, ruta_salida="sin_usos.txt"):
+    def generar_archivo_sin_usos(self, elemento, tipo, ruta="recursos/sin_usos.csv"):
         """
-        Genera un archivo con todos los elementos de las tres listas
-        que tengan 0 usos.
+        Escribe o genera un archivo con todos los elementos de las tres listas
+        que tengan 0 usos (basicamente eliminados del inventarioo).
         """
-        pass
+
+        existe = os.path.exists(ruta)
+
+        with open(ruta, "a", encoding="utf-8") as f:
+            # Escribir encabezado solo si el archivo no existía
+            if not existe:
+                f.write("tipo,nombre,efecto,duracion,peso,usos\n")
+
+            f.write(f"{tipo},{elemento.nombre},{elemento.efecto},{elemento.duracion},{elemento.peso},{elemento.usos}\n")
 
     # ---------------------------------------------
     # Método interno para seleccionar lista

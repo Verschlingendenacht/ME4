@@ -21,7 +21,16 @@ class Pocion(Objeto):
     def __init__(self, nombre, efecto, duracion, peso, usos):
         super().__init__(nombre, efecto, duracion, peso, usos)
 
-    def usar(self):
-        print(f"Bebiendo la poción: {self.nombre} que tiene el efecto: {self.efecto} por {self.duracion} minutos.")
-        self.usos = self.usos - 1
-        self.peso = self.peso - 0.5
+    def usar(self, cantidad=0.5):
+        if self.usos <= 0:
+            print(f"⚠️ La poción '{self.nombre}' ya no tiene usos.")
+            return
+
+        print(f"🧪 Bebiendo '{self.nombre}': efecto '{self.efecto}' por {self.duracion} min.")
+
+        #Reducir cantidad (peso) y usos
+        self.peso = max(0, self.peso - cantidad)
+        self.usos -= 1
+
+        if self.peso == 0 or self.usos == 0:
+            print(f"💧 La poción '{self.nombre}' se ha consumido por completo.")
