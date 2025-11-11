@@ -21,5 +21,7 @@ class Pocion(Objeto):
     def __init__(self, nombre, efecto, duracion, peso, usos):
         super().__init__(nombre, efecto, duracion, peso, usos)
 
-    def beber(self):
+    def usar(self):
         print(f"Bebiendo la poción: {self.nombre} que tiene el efecto: {self.efecto} por {self.duracion} minutos.")
+        self.usos = self.usos - 1
+        self.peso = self.peso - 0.5

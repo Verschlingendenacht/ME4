@@ -21,5 +21,7 @@ class Hechizo(Objeto):
     def __init__(self, nombre, efecto, duracion, peso, usos):
         super().__init__(nombre, efecto, duracion, peso, usos)
 
-    def lanzar(self, objetivo):
+    def usar(self, objetivo):
         print(f"Lanzando {self.nombre} sobre {objetivo} con poder {self.efecto} y costo de mana {self.peso}.")
+        self.usos = self.usos - 1
+        self.peso = self.peso - 0.5

@@ -20,12 +20,14 @@ from elementos.objeto import Objeto
 from elementos.hechizo import Hechizo
 from elementos.pocion import Pocion
 
+#pensemos en esto como el inventario general
 class Controlador:
     def __init__(self):
         # Inicializa tres listas dobles independientes
         self.__lista_objetos = double_list()
         self.__lista_hechizos = double_list()
         self.__lista_pociones = double_list()
+        self.__jugador = None
 
     # ---------------------------------------------
     # Propiedades de solo lectura
@@ -41,6 +43,14 @@ class Controlador:
     @property
     def lista_pociones(self):
         return self.__lista_pociones
+    
+    def registrar_jugador(self, jugador):
+        """
+        Registra al jugador que comparte las listas con el controlador.
+        Llamado automáticamente desde Jugador.
+        """
+        self.__jugador = jugador
+        return True
 
     # ---------------------------------------------
     # Operaciones principales del sistema
@@ -84,6 +94,11 @@ class Controlador:
         """
         Inserta un nuevo elemento a la lista indicada.
         """
+        # Validar capacidad antes de insertar
+        if self.__jugador and not self.__jugador.puede_agregar(elemento):
+            print(f"No se puede agregar '{getattr(elemento, 'nombre', str(elemento))}': excede límite de peso del jugador.")
+            return False
+        
         if tipo == Hechizo:
             self.lista_hechizos.addFirst(elemento)
         elif tipo == Pocion:
